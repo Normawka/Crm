@@ -30,7 +30,6 @@
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
                                         <b>Status : </b>
-{{--                                        @dd($task->status['name'])--}}
                                         <p><b>{{$task->status['name']}}</b></p>
                                     </li>
 

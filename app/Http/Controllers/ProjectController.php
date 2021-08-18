@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
+use App\Interfaces\Repositories\IProjectRepository;
 use App\Models\Project;
+use App\Models\Task;
+use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function __construct()
+    public $repozitory;
+
+    public function __construct(IProjectRepository $projectRepository)
     {
         $this->middleware('auth');
+        $this->repozitory = $projectRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +26,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-      $projects =   Project::paginate(6);
-       return view('project.index',compact('projects'));
+        $projects = Project::paginate(6);
+        return view('project.index', compact('projects'));
     }
 
     /**
@@ -36,16 +43,16 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProjectRequest $request)
     {
-         Project::create($request->only([
+        Project::create($request->only([
             'name',
             'description',
         ]));
-        return redirect()->route('project.index')->with('success','Project create');
+        return redirect()->route('project.index')->with('success', 'Project create');
     }
 
     /**
@@ -56,28 +63,26 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project = Project::with('tasks')->findOrFail($project->id);
-
+        $project = $this->repozitory->show($project);
         return view('project.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Project $project
      * @return \Illuminate\Http\Response
      */
     public function edit(Project $project)
     {
-
-        return view('project.create',compact('project'));
+        return view('project.create', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ProjectRequest $request, Project $project)
@@ -89,12 +94,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Project $project)
     {
         $project->delete();
-        return redirect()->route('project.index')->with('success' ,'Project delete');
+        return redirect()->route('project.index')->with('success', 'Project delete');
     }
 }

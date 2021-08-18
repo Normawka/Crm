@@ -26,6 +26,7 @@ class TaskRequest extends FormRequest
         $rules =[
             'name'=>'min:1|max:255',
             'description'=>'min:1|max:255',
+            'file' =>'file||mimes:jpeg,bmp,png,rar,txt,word,pdf,tgz,zip,php,js,css|max:10000' ,
 
         ];
         return $rules;
@@ -38,6 +39,8 @@ class TaskRequest extends FormRequest
             'max' => 'Field :attribute must have a maximum of :max characters',
             'numeric' => 'Field :attribute field must only contain numbers',
             'unique' => 'Such :attribute exists enter other data',
+            'size' => 'The :attribute must be exactly :size.',
+
 
         ];
 

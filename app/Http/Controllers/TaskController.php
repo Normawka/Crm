@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Object_;
 
 class TaskController extends Controller
 {
@@ -115,7 +116,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        $project = $task->project_id;
        $task->delete();
-        return redirect()->route('task.index');
+
+        return redirect()->route('project.show',compact('project'));
     }
 }

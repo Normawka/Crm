@@ -72,12 +72,13 @@
                                 <tbody>
 
                                 @foreach($project->tasks as $task)
-{{--                                    @dd($task)--}}
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">{{$task->id}}</a></td>
+                                    <td>{{$task->id}}</td>
                                     <td>{{$task->name}}</td>
                                     <td>{{$task->description}}</td>
-                                    <td>{{$task->status_id}}</td>
+
+                                    <td>{{$task->status->name}}</td>
+
                                     <td>
                                         <div class="sparkbar" data-color="#00a65a" data-height="20">{{$task->created_at}}</div>
                                     </td>

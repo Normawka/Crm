@@ -18,4 +18,8 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
+    public function tasksWithStatus(){
+        return $this->hasMany(Task::class)->with('status');
+    }
+
 }

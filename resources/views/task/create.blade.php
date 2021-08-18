@@ -89,6 +89,9 @@
                                         </a>
                                         @endisset
                                             <input type="file" name="file" class="form-control" placeholder="file">
+                                        @error('file')
+                                        <div class="alert alert-danger">{{$message}}</div>
+                                        @enderror
                                     </div>
                                 <!-- /.card-body -->
                             </div>
