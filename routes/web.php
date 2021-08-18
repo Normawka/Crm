@@ -21,6 +21,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']],function (){
     Route::resource('project', ProjectController::class);
-    Route::resource('tasks',TaskController::class);
+    Route::resource('project.tasks',TaskController::class)->shallow();
 
 });

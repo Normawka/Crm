@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -22,7 +26,7 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -52,7 +56,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project = Project::findOrFail($project->id);
+        $project = Project::with('tasks')->findOrFail($project->id);
+
         return view('project.show', compact('project'));
     }
 
@@ -64,6 +69,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+
         return view('project.create',compact('project'));
     }
 

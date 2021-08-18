@@ -40,8 +40,75 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Tasks</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Created at</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @foreach($project->tasks as $task)
+{{--                                    @dd($task)--}}
+                                <tr>
+                                    <td><a href="pages/examples/invoice.html">{{$task->id}}</a></td>
+                                    <td>{{$task->name}}</td>
+                                    <td>{{$task->description}}</td>
+                                    <td>{{$task->status_id}}</td>
+                                    <td>
+                                        <div class="sparkbar" data-color="#00a65a" data-height="20">{{$task->created_at}}</div>
+                                    </td>
+                                    <td>
+                                    <form action="{{route("tasks.destroy",$task->id) }}" method="POST">
+
+                                        <a class="btn btn-info" href="{{ route('tasks.show',$task->id) }}">Show</a>
+
+                                        <a class="btn btn-primary" href="{{ route('tasks.edit',$task->id) }}">Edit</a>
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <a  href="{{route('project.tasks.create',$project->id)}}" type="submit" class="btn btn-sm btn-info float-left">Add task</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+            </div>
         </section>
-        <!-- /.content -->
     </div>
 
 

@@ -10,12 +10,20 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = [
-            'name',
-            'description',
-            'file'
+        'name',
+        'description',
+        'file',
+        'project_id',
+        'status_id'
     ];
 
-    public function project(){
+    public function project()
+    {
         return $this->belongsTo(Project::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(TaskStatus::class);
     }
 }
